@@ -1,4 +1,4 @@
-# nonsense/main.py
+# nonsense/nonsense.py
 import os
 
 try:
@@ -147,7 +147,7 @@ def inputhandler(string: str, last_result_holder: dict):
 
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(f"\n\nnonsense {version}\n\nh=help\nq=quit\nc=clear\n")
+    print(f"\n\nnonsense\n\nh=help\nq=quit\nc=clear\n")
     last_result_holder = {"last_result": None}
     while True:
         userinput = input(color_text(":: ", Fore.YELLOW))

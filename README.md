@@ -13,4 +13,4 @@
 ## Installation
 
 ```bash
-pip install nonsense
+pip install nonsense-cli
