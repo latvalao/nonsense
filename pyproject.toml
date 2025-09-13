@@ -1,0 +1,11 @@
+[project]
+name = "nonsense"
+version = "1.4"
+description = "A quirky command-line calculator"
+authors = [{name = "Otto Latvala", email = "halkodigital@gmail.com"}]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["colorama"]
+
+[project.scripts]
+nonsense = "nonsense.main:main"

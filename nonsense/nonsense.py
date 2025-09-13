@@ -1,4 +1,6 @@
+# nonsense/main.py
 import os
+
 try:
     from colorama import init, Fore, Style
     init(autoreset=True)
@@ -6,6 +8,7 @@ try:
 except ImportError:
     USE_COLOR = False
     print("Installing the 'Colorama' module is highly recommended\n\n")
+
 
 def color_text(text, color):
     if USE_COLOR:
@@ -39,10 +42,9 @@ ops = {
 }
 
 opchars = "*+/-%^"
-last_result = None
 version = "v1.4"
 
-# Flat Expression Evaluation
+
 def evaluate_flat_expression(expr: str) -> float:
     numbers = []
     operators = []
@@ -84,7 +86,7 @@ def evaluate_flat_expression(expr: str) -> float:
 
     return numbers[0]
 
-# Parentheses Evaluation
+
 def evaluate_expression(expr: str) -> float:
     expr = expr.replace(" ", "")
     if "(" not in expr:
@@ -100,9 +102,8 @@ def evaluate_expression(expr: str) -> float:
     new_expr = expr[:start] + str(inner_result) + expr[end+1:]
     return evaluate_expression(new_expr)
 
-# Main Input Handler
-def inputhandler(string: str):
-    global last_result
+
+def inputhandler(string: str, last_result_holder: dict):
     try:
         if "h" in string:
             print(help_text)
@@ -116,13 +117,13 @@ def inputhandler(string: str):
 
         # Replace "ans" with last result
         if "ans" in string:
-            if last_result is not None:
-                string = string.replace("ans", str(last_result))
+            if last_result_holder["last_result"] is not None:
+                string = string.replace("ans", str(last_result_holder["last_result"]))
             else:
                 print("No previous answer available.")
                 return
 
-        # Replace ** with ^ internally <- goofy method but works so why not lol
+        # Replace ** with ^ internally
         string = string.replace("**", "^")
 
         # Evaluate the expression
@@ -134,7 +135,7 @@ def inputhandler(string: str):
         outputstr = string.replace(" ", "")
         print(f"\n{color_text(outputstr, Fore.GREEN)} = {color_text(display_result, Fore.GREEN)}\n")
 
-        last_result = result
+        last_result_holder["last_result"] = result
 
     except ValueError as ve:
         print(f"\nError: {ve}\n")
@@ -143,12 +144,15 @@ def inputhandler(string: str):
     except Exception as e:
         print(f"\nUnexpected error: {e}\n")
 
-# Main Loop
+
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"\n\nnonsense {version}\n\nh=help\nq=quit\nc=clear\n")
+    last_result_holder = {"last_result": None}
     while True:
         userinput = input(color_text(":: ", Fore.YELLOW))
-        inputhandler(userinput)
+        inputhandler(userinput, last_result_holder)
 
-main()
+
+if __name__ == "__main__":
+    main()
