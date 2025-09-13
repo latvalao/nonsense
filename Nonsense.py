@@ -39,14 +39,15 @@ def inputhandler(string:str):
 	operators = []
 	current_number = ""
 	for ch in string:
-		if ch.isdigit():
+		if ch.isdigit() or ch == ".":
 			current_number += ch
 		elif ch in opchars:
-			numbers.append(int(current_number))
+			numbers.append(float(current_number))
 			operators.append(ch)
 			current_number=""
-	numbers.append(int(current_number)) # Add last nr
-	#print(numbers,operators)
+	numbers.append(float(current_number)) 
+	
+	
 	n=0
 	while n < len(operators):
 		if operators[n] in "*/":   
@@ -66,7 +67,7 @@ def inputhandler(string:str):
 		else:
 			n += 1
 	result = numbers[0]
-	print(result)
+	print(f"{string} = {result}")
 	
 	
 			
@@ -74,7 +75,7 @@ def inputhandler(string:str):
 	
 
 	
-version = "v1"
+version = "v1.1"
 ops = { # operators
     "+": addition,
     "-": subtraction,
