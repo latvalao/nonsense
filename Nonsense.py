@@ -35,26 +35,57 @@ def inputhandler(string:str):
 		quit()
 		
 		# Logic: Loop through items in the ops dictionary
-		
-	for op_symbol, op_func in ops.items(): 
-		if op_symbol in string:
-			parts=string.split(op_symbol)
-			result=op_func(int(parts[0]),int(parts[1]))
-			print(result)
+	numbers = []
+	operators = []
+	current_number = ""
+	for ch in string:
+		if ch.isdigit():
+			current_number += ch
+		elif ch in opchars:
+			numbers.append(int(current_number))
+			operators.append(ch)
+			current_number=""
+	numbers.append(int(current_number)) # Add last nr
+	#print(numbers,operators)
+	n=0
+	while n < len(operators):
+		if operators[n] in "*/":   
+			result = ops[operators[n]](numbers[n],numbers[n+1])
+			numbers[n]=result
+			numbers.pop(n+1)
+			operators.pop(n)
+		else:
+			n += 1
+	n=0
+	while n < len(operators):
+		if operators[n] in "+-":   
+			result = ops[operators[n]](numbers[n],numbers[n+1])
+			numbers[n]=result
+			numbers.pop(n+1)
+			operators.pop(n)
+		else:
+			n += 1
+	result = numbers[0]
+	print(result)
+	
+	
+			
 			
 	
 
 	
-
+version = "v1"
 ops = { # operators
     "+": addition,
     "-": subtraction,
     "*": multiply,
     "/": divide
 }
-def main():
-	os.system("clear")
-	print("\n\nnonsense - A Simple Python Calculator\n\nh=help\nq=quit\n")
+opchars = "*+/-"
+def main(): 
+	os.system('cls' if os.name == 'nt' else 'clear')
+
+	print(f"\n\nnonsense {version} - A Simple Python Calculator\n\nh=help\nq=quit\n")
 	while True:
 		userinput = input(":: ")
 		inputhandler(userinput)
