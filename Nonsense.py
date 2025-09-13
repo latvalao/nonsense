@@ -1,4 +1,17 @@
 import os
+try:
+    from colorama import init, Fore, Style
+    init(autoreset=True)
+    USE_COLOR = True
+except ImportError:
+    USE_COLOR = False
+    print("Installing the 'Colorama' module is highly recommended\n\n")
+
+def color_text(text, color):
+    if USE_COLOR:
+        return f"{color}{text}{Style.RESET_ALL}"
+    return text
+
 
 help_text = """
 Features:
@@ -27,7 +40,7 @@ ops = {
 
 opchars = "*+/-%^"
 last_result = None
-version = "v1.3"
+version = "v1.4"
 
 # Flat Expression Evaluation
 def evaluate_flat_expression(expr: str) -> float:
@@ -97,6 +110,9 @@ def inputhandler(string: str):
         elif "q" in string:
             print("\nBye bye!")
             quit()
+        elif "c" in string:
+            main()
+            return
 
         # Replace "ans" with last result
         if "ans" in string:
@@ -115,7 +131,8 @@ def inputhandler(string: str):
         # Pretty display
         display_result = int(result) if result.is_integer() else result
         outputstr = string.replace("^", "**")
-        print(f"\n{outputstr} = {display_result}\n")
+        outputstr = string.replace(" ", "")
+        print(f"\n{color_text(outputstr, Fore.GREEN)} = {color_text(display_result, Fore.GREEN)}\n")
 
         last_result = result
 
@@ -129,9 +146,9 @@ def inputhandler(string: str):
 # Main Loop
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(f"\n\nnonsense {version} - A Simple Python Calculator\n\nh=help\nq=quit\n")
+    print(f"\n\nnonsense {version}\n\nh=help\nq=quit\nc=clear\n")
     while True:
-        userinput = input(":: ")
+        userinput = input(color_text(":: ", Fore.YELLOW))
         inputhandler(userinput)
 
 main()
