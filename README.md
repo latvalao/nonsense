@@ -2,6 +2,7 @@
 
 **Nonsense** is a quirky command-line calculator that handles basic arithmetic, parentheses, exponentiation, and supports the `ans` keyword to reuse the last result. It's designed for fun and simplicity, perfect for quick calculations in the terminal.
 
+Note: I plan to add more features in the future
 ## Features
 
 - Handles `+`, `-`, `*`, `/`, `%`, `**/^` with correct operator precedence
